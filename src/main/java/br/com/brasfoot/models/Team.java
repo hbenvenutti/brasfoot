@@ -1,6 +1,7 @@
 package br.com.brasfoot.models;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -126,8 +127,23 @@ public class Team {
 
   // *** --- methods ---------------------------------------------------- *** //
 
-  public List<Player> relatePlayer(Player player) {
-    this.relatedPlayers.add(player);
+  public List<Player> relatePlayers() {
+    int counter = 0;
+
+    this.relatedPlayers.clear();
+    
+    Collections.sort(players, (player1, player2) -> 
+      Integer.compare(player2.getStats(), player1.getStats()));
+    
+    for (Player player : players) {
+        if (counter == 18) break;
+
+        if (!player.canPlay()) continue;
+
+        this.relatedPlayers.add(player);
+        counter++;
+    }
+
     return this.relatedPlayers;
   }
 }

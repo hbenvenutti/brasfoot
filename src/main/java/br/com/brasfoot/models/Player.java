@@ -190,4 +190,25 @@ public class Player {
     if (team == null) return;
     this.team = team;
   }
+
+  // *** --- methods ---------------------------------------------------- *** //
+  
+  public void addCard() {
+    this.cardsReceived++;
+  }
+
+  // ------------------------------------------------------------------------ //
+
+  public void applyRedCard() {
+    this.cardsReceived = 0;
+    this.isSuspended = true;
+  }
+
+  // ------------------------------------------------------------------------ //
+
+  public boolean canPlay() {
+    if (this.cardsReceived > 3) return false;
+
+    return this.isSuspended;
+  }
 }
