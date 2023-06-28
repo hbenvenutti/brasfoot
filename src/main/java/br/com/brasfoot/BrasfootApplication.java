@@ -9,5 +9,4 @@ public class BrasfootApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(BrasfootApplication.class, args);
 	}
-
 }

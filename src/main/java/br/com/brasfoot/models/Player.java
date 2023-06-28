@@ -1,11 +1,20 @@
 package br.com.brasfoot.models;
 
 import java.util.Date;
+import java.util.Objects;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 // * ---------------------------------------------------------------------- * //
 
+@Entity
 public class Player {
-  private int code;
+
+  @Id
+  private int id;
   private String name;
   private String nationality;
   private Date birthday;
@@ -14,6 +23,9 @@ public class Player {
   private int stats = 1;
   private int cardsReceived = 0;
   private boolean isSuspended = false;
+
+  @ManyToOne
+  @JoinColumn(name = "team_id")
   private Team team;
 
   // *** --- constructors ----------------------------------------------- *** //
@@ -33,13 +45,13 @@ public class Player {
   // ------------------------------------------------------------------------ //
 
   public Player(String name, String nationality, String position, Date birth, 
-    int stats, int code, String nickname, int cards, boolean isSuspended, Team team) {
+    int stats, int id, String nickname, int cards, boolean isSuspended, Team team) {
       setName(name);
       setNationality(nationality);
       setPosition(position);
       setBirthday(birth);
       setStats(stats);
-      setCode(code);
+      setCode(id);
       setNickname(nickname);
       setCards(cards);
       setSuspended(isSuspended);
@@ -51,7 +63,7 @@ public class Player {
   @Override
   public String toString() {
     String str = "Player: " + this.name + '\n'
-    + "code: " +  this.code + '\n'
+    + "id: " +  this.id + '\n'
     + "nationality: " + this.nationality + '\n'
     + "birthday: " + this.birthday + '\n'
     + "nickname: " + this.nickname + '\n'
@@ -72,7 +84,7 @@ public class Player {
   // ------------------------------------------------------------------------ //
 
   public int getCode() {
-    return code;
+    return id;
   }
 
   // ------------------------------------------------------------------------ //
@@ -133,8 +145,8 @@ public class Player {
 
   // ------------------------------------------------------------------------ //
 
-  public void setCode(int code) {
-    this.code = code;
+  public void setCode(int id) {
+    this.id = id;
   }
 
   // ------------------------------------------------------------------------ //
@@ -211,4 +223,22 @@ public class Player {
 
     return this.isSuspended;
   }
+
+  // *** --- jakarta.persistence overrides ------------------------------ *** //
+  @Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
+
+  @Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Player other = (Player) obj;
+		return id == other.id;
+	}
 }

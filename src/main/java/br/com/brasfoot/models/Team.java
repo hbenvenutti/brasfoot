@@ -4,16 +4,28 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 
 // * ---------------------------------------------------------------------- * //
 
+@Entity
 public class Team {
-  int code;
+  @Id
+  int id;
+
   String name;
   String nickname;
   Date foundation;
   String city;
+
+  @OneToMany(mappedBy = "team")
   List<Player> players = new ArrayList<Player>();
+
+  // @OneToMany(mappedBy = "team")
   List<Player> relatedPlayers = new ArrayList<Player>();
 
   // *** --- constructors ----------------------------------------------- *** //
@@ -30,9 +42,9 @@ public class Team {
 
   // ------------------------------------------------------------------------ //
 
-  public Team(int code, String name, String nickname, Date foundation, String city, List<Player> players,
+  public Team(int id, String name, String nickname, Date foundation, String city, List<Player> players,
       List<Player> relatedPlayers) {
-    this.code = code;
+    this.id = id;
     this.name = name;
     this.nickname = nickname;
     this.foundation = foundation;
@@ -44,7 +56,7 @@ public class Team {
   // *** --- getters ---------------------------------------------------- *** //
   
   public int getCode() {
-    return code;
+    return id;
   }
 
   // ------------------------------------------------------------------------ //
@@ -85,8 +97,8 @@ public class Team {
 
   // *** --- setters ---------------------------------------------------- *** //
   
-  public void setCode(int code) {
-    this.code = code;
+  public void setCode(int id) {
+    this.id = id;
   }
 
   // ------------------------------------------------------------------------ //
@@ -146,4 +158,22 @@ public class Team {
 
     return this.relatedPlayers;
   }
+
+  // *** --- jakarta.persistence overrides ------------------------------ *** //
+  @Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
+
+  @Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Team other = (Team) obj;
+		return id == other.id;
+	}
 }
