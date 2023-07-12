@@ -1,12 +1,17 @@
 package br.com.brasfoot.models;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Objects;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 
 // * ---------------------------------------------------------------------- * //
 
@@ -14,10 +19,19 @@ import jakarta.persistence.ManyToOne;
 public class Player {
 
   @Id
-  private int id;
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private long id;
+
+  @Column(nullable = false, length = 50)
   private String name;
+
+  @Column(nullable = false, length = 50)
   private String nationality;
-  private Date birthday;
+
+  @Column(nullable = false)
+  @Temporal(TemporalType.DATE)
+  private LocalDate birthday;
+
   private String nickname;
   private String position;
   private int stats = 1;
@@ -34,7 +48,7 @@ public class Player {
 
   // ------------------------------------------------------------------------ //
 
-  public Player(String name, String nationality, String position, Date birth, int stats) {
+  public Player(String name, String nationality, String position, LocalDate birth, int stats) {
     setName(name);
     setPosition(position);
     setNationality(nationality);
@@ -44,7 +58,7 @@ public class Player {
 
   // ------------------------------------------------------------------------ //
 
-  public Player(String name, String nationality, String position, Date birth, 
+  public Player(String name, String nationality, String position, LocalDate birth, 
     int stats, int id, String nickname, int cards, boolean isSuspended, Team team) {
       setName(name);
       setNationality(nationality);
@@ -83,13 +97,13 @@ public class Player {
 
   // ------------------------------------------------------------------------ //
 
-  public int getCode() {
+  public long getCode() {
     return id;
   }
 
   // ------------------------------------------------------------------------ //
 
-  public Date getBirthday() {
+  public LocalDate getBirthday() {
     return birthday;
   }
 
@@ -151,7 +165,7 @@ public class Player {
 
   // ------------------------------------------------------------------------ //
 
-  public void setBirthday(Date birthday) {
+  public void setBirthday(LocalDate birthday) {
     this.birthday = birthday;
   }
 

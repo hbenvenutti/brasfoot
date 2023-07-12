@@ -9,6 +9,7 @@ import java.util.Objects;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Transient;
 
 // * ---------------------------------------------------------------------- * //
 
@@ -25,7 +26,7 @@ public class Team {
   @OneToMany(mappedBy = "team")
   List<Player> players = new ArrayList<Player>();
 
-  // @OneToMany(mappedBy = "team")
+  @Transient
   List<Player> relatedPlayers = new ArrayList<Player>();
 
   // *** --- constructors ----------------------------------------------- *** //

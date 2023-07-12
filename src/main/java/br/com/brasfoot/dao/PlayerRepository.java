@@ -46,7 +46,7 @@ public class PlayerRepository {
 
   // ------------------------------------------------------------------------ //
 
-  public Player findByCode(int code) {
+  public Player findByCode(long code) {
     return manager.find(Player.class, code);
   }
 }
